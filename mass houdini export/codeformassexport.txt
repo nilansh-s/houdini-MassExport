@@ -1,0 +1,45 @@
+def export():    
+   
+    #get switch node to veriable    
+    switch_node = hou.node("/obj/geo1/switch1")   
+    
+    #get switch node inputs to tuple    
+    switch_inputs = switch_node.inputs()    
+    
+    # get the length of the tuple   
+    num_inputs = len(switch_inputs)    
+    
+    # get switch "input" parameter to avariable    
+    input_parm = switch_node.parm("input")    
+    
+    # get rop alembic "alembic file" parameter to a variable    
+    filepath = hou.node ("obj/geo1/rop_alembic1").parm("filename")    
+    
+    # loop through inputs    
+    seq = range(num_inputs) # [0,1,2,3,4,...]    
+    
+    for i in seq:        
+        input_parm.set(i) # set switch "input" parm to iterated number        
+        
+        prefix = "/jobs/uni/build_core/charSage_nilansh-s/houdini/hip/test_geo/"        
+        
+        iteration = str(i).rjust(3,"0") #convert integer to string and add padding        
+        
+        suffix = ".abc"       
+        
+        path = prefix + iteration + suffix        
+        
+        filepath.set(path)       
+        
+        hou.node("/obj/geo1/rop_alembic1").parm("execute").pressButton()       
+        
+        print("working")
+        
+"""def nft():    '''work in  progress fot adding randamisation of charaters for crowdgamesd nft
+            
+            L=[]    
+                for i in range(1,5):       
+                    for j in range(1,5):            
+                        for k in range(1,5):                
+                            for l in range(1,5):                    
+                                L.append(["hat"+str(i),"beard"+str(j),"coat"+str(k),"hat"+str(l)]) ""
